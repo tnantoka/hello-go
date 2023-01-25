@@ -13,6 +13,12 @@ $ docker compose exec app ./hello/main
 Hello, World!
 ```
 
+## With modules
+
+```
+$ docker compose exec app bash -c "cd package && go run package"
+```
+
 ## Format
 
 ```
