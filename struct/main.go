@@ -19,6 +19,10 @@ func (self Rect) Description() string {
 	return fmt.Sprintf("(Origin: %v, Size: %v)", self.Origin, self.Size)
 }
 
+func (self Rect) String() string {
+	return self.Description()
+}
+
 func main() {
 	rects := []Rect{
 		{Point{0, 0}, Size{100, 100}},
@@ -26,6 +30,7 @@ func main() {
 	}
 
 	for i, rect := range rects {
-		fmt.Printf("rects[%d] = %s\n", i, rect.Description())
+		fmt.Printf("rects[%d]: ", i)
+		fmt.Println(rect)
 	}
 }
