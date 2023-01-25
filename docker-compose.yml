@@ -1,0 +1,7 @@
+services:
+  app:
+    image: golang:1.19
+    volumes:
+      - .:/app
+    working_dir: /app
+    tty: true
