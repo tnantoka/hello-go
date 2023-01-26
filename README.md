@@ -1,34 +1,56 @@
 # hello-go
 
-## Hello, World!
+## Prepare
 
 ```
 $ docker compose up
+$ docker compose exec app bash
+```
 
-$ docker compose exec app go run hello/main.go
+## Hello, World!
+
+```
+$ cd hello
+
+$ go fmt *.go
+
+$ go run main.go
 Hello, World!
 
-$ docker compose exec app go build -o hello/main hello/main.go
-$ docker compose exec app ./hello/main
+$ go build main.go
+$ ./main
 Hello, World!
+```
+
+## Test
+
+```
+$ cd test
+$ go test -coverprofile=cover.out
+$ go tool cover -html=cover.out -o coverage.html
+
+# Mac
+$ open test/coverage.html
 ```
 
 ## With modules
 
 ```
-$ docker compose exec app bash -c "cd package && go run package"
-```
+$ cd package
 
-## Format
+$ go fmt
 
-```
-$ docker compose exec app bash -c "go fmt hello/*"
+$ go run package
 ```
 
 ## Cross compile
 
 ```
-$ docker compose exec -e GOOS=darwin -e GOARCH=arm64 app go build -o hello/main hello/main.go
+$ cd hello
+
+$ GOOS=darwin GOARCH=arm64 go build main.go
+
+# Mac
 $ ./hello/main 
 Hello, World
 ```
@@ -36,12 +58,12 @@ Hello, World
 ## Install packages
 
 ```
-$ docker compose exec app go install github.com/go-task/task/v3/cmd/task@latest
+$ go install github.com/go-task/task/v3/cmd/task@latest
 
-$ docker compose exec app ls /go/bin
+$ ls /go/bin
 task
 
-$ docker compose exec app task
+$ task
 task: No Taskfile found in "/app" (or any of the parent directories). Use "task --init" to create a new one
 ```
 
