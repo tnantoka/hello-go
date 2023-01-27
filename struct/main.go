@@ -33,4 +33,15 @@ func main() {
 		fmt.Printf("rects[%d]: ", i)
 		fmt.Println(rect)
 	}
+
+	rect1 := Rect{Point{0, 0}, Size{100, 100}}
+	rect2 := rect1
+	rect1.Origin.X = 10
+	fmt.Printf("1: %v, 2: %v\n", rect1.Origin.X, rect2.Origin.X)
+
+	rect3 := &Rect{Point{0, 0}, Size{100, 100}}
+	rect4 := rect3
+	rect3.Origin.X = 10
+	fmt.Printf("3: %v, 4: %v\n", rect3.Origin.X, rect4.Origin.X)
+
 }
