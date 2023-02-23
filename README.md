@@ -71,3 +71,4 @@ task: No Taskfile found in "/app" (or any of the parent directories). Use "task 
 
 - https://note.com/umotion/n/n45f63f59bed5
 - https://tyablog.net/2020/01/05/difference-between-interface-and-pointer-in-golang/
+- https://qiita.com/k0kubun/items/1b641dfd186fe46feb65
