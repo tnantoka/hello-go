@@ -67,8 +67,19 @@ $ task
 task: No Taskfile found in "/app" (or any of the parent directories). Use "task --init" to create a new one
 ```
 
+## Wasm
+
+```
+$ cd wasm
+$ GOOS=js GOARCH=wasm go build -o main.wasm main.go
+$ $(go env GOROOT)/misc/wasm/wasm_exec.js
+$ go run server.go
+```
+
 ## Acknowledgements
 
 - https://note.com/umotion/n/n45f63f59bed5
 - https://tyablog.net/2020/01/05/difference-between-interface-and-pointer-in-golang/
 - https://qiita.com/k0kubun/items/1b641dfd186fe46feb65
+- https://qiita.com/inajob/items/e321d9a4b24c32601360
+

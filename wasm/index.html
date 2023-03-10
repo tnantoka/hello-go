@@ -1,0 +1,52 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>wasm</title>
+</head>
+
+<body>
+  <p>
+    <button id="run" disabled>Run</button>
+  </p>
+
+  <script src="wasm_exec.js"></script>
+  <script>
+    let outputArray;
+
+    globalThis.fs = {
+      constants: { O_WRONLY: -1, O_RDWR: -1, O_CREAT: -1, O_TRUNC: -1, O_APPEND: -1, O_EXCL: -1 },
+      writeSync(fd, buf) {
+        outputArray.push(buf)
+        return buf.length;
+      },
+      write(fd, buf, offset, length, position, callback) {
+        const n = this.writeSync(fd, buf);
+        callback(null, n);
+      },
+    };
+
+    const go = new Go();
+
+    (async () => {
+      const result = await WebAssembly.instantiateStreaming(fetch('main.wasm'), go.importObject);
+      let instance = result.instance;
+      
+      const run = document.querySelector('#run');
+      run.disabled = false;
+      run.addEventListener('click', async () => {
+        outputArray = [];
+
+        await go.run(instance);
+
+        img = document.createElement('img')
+        img.src = 'data:image/png;base64,' + btoa(String.fromCharCode(...outputArray[0]))
+        document.body.appendChild(img)
+
+        instance = await WebAssembly.instantiate(result.module, go.importObject);
+      });
+    })();
+  </script>
+</body>
+
+</html>

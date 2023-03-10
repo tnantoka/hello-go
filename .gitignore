@@ -2,3 +2,5 @@ main
 parser.go
 y.output
 image.png
+main.wasm
+wasm_exec.js
