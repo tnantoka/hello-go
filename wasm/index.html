@@ -30,20 +30,19 @@
 
     (async () => {
       const result = await WebAssembly.instantiateStreaming(fetch('main.wasm'), go.importObject);
-      let instance = result.instance;
+      const instance = result.instance;
+      go.run(instance);
       
       const run = document.querySelector('#run');
       run.disabled = false;
       run.addEventListener('click', async () => {
         outputArray = [];
 
-        await go.run(instance);
+        hello(Math.floor(Math.random() * 100) + 100);
 
         img = document.createElement('img')
         img.src = 'data:image/png;base64,' + btoa(String.fromCharCode(...outputArray[0]))
         document.body.appendChild(img)
-
-        instance = await WebAssembly.instantiate(result.module, go.importObject);
       });
     })();
   </script>
