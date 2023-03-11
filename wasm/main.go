@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/base64"
 	"fmt"
 	"image"
 	"image/color"
@@ -14,16 +15,21 @@ import (
 
 func main() {
 	js.Global().Set("hello", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		defer func() {
+			if r := recover(); r != nil {
+				fmt.Println("Recovered from", r)
+			}
+		}()
+
 		size := args[0].Int()
-		generate(size)
-		return nil
+		return generate(size)
 	}))
 
 	c := make(chan struct{})
 	<-c
 }
 
-func generate(size int) {
+func generate(size int) string {
 	imageWidth := size
 	imageHeight := size
 
@@ -37,7 +43,9 @@ func generate(size int) {
 		os.Exit(1)
 	}
 
-	os.Stdout.Write(buf.Bytes())
+	encoded := base64.StdEncoding.EncodeToString(buf.Bytes())
+	dataURL := fmt.Sprintf("data:image/png;base64,%s", encoded)
+	return dataURL
 }
 
 func randomColor() color.RGBA {
